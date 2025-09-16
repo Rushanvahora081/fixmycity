@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # FixMyCity - Civic Issue Tracking System
 
 A full-stack demo project built with Next.js and MongoDB for tracking civic issues with role-based dashboards.
@@ -179,3 +180,6 @@ This is a demo project. Feel free to fork and extend with additional features!
 ## 📄 License
 
 MIT License - feel free to use this project for learning and demonstration purposes.
+=======
+# fixmycity
+>>>>>>> 8f6d610011ad8c9b0264b8df577ee2ca5dd3b060
