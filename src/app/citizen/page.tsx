@@ -1,11 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Issue } from '@/models/Issue';
+import { IssueDTO } from '@/types/issue';
 
 export default function CitizenDashboard() {
   const [user, setUser] = useState<any>(null);
-  const [issues, setIssues] = useState<Issue[]>([]);
+  const [issues, setIssues] = useState<IssueDTO[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -20,12 +20,12 @@ export default function CitizenDashboard() {
       role: 'citizen'
     };
     setUser(demoUser);
-    loadIssues();
+    loadIssues(demoUser.userId);
   }, []);
 
-  const loadIssues = async () => {
+  const loadIssues = async (createdBy?: string) => {
     try {
-      const response = await fetch(`/api/issues?createdBy=${user?.userId}`);
+      const response = await fetch(`/api/issues${createdBy ? `?createdBy=${createdBy}` : ''}`);
       const data = await response.json();
       setIssues(data.issues || []);
     } catch (error) {
@@ -201,10 +201,10 @@ export default function CitizenDashboard() {
             ) : (
               <div className="space-y-4">
                 {issues.map((issue) => (
-                  <div key={issue._id?.toString()} className="border border-gray-200 rounded-lg p-4">
+                  <div key={(issue._id || Math.random().toString())} className="border border-gray-200 rounded-lg p-4">
                     <div className="flex justify-between items-start mb-2">
                       <h3 className="font-semibold text-gray-900">{issue.title}</h3>
-                      <span className={`status-badge ${getStatusColor(issue.status)}`}>
+                      <span className={`status-badge ${getStatusColor(issue.status as string)}`}>
                         {issue.status.replace('_', ' ').toUpperCase()}
                       </span>
                     </div>

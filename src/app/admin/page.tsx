@@ -1,13 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Issue } from '@/models/Issue';
-import { User } from '@/models/User';
+import { IssueDTO } from '@/types/issue';
+import { UserDTO } from '@/types/user';
 
 export default function AdminDashboard() {
   const [user, setUser] = useState<any>(null);
-  const [issues, setIssues] = useState<Issue[]>([]);
-  const [municipalOfficers, setMunicipalOfficers] = useState<User[]>([]);
+  const [issues, setIssues] = useState<IssueDTO[]>([]);
+  const [municipalOfficers, setMunicipalOfficers] = useState<UserDTO[]>([]);
   const [loading, setLoading] = useState(true);
   const [showCreateOfficer, setShowCreateOfficer] = useState(false);
   const [creating, setCreating] = useState(false);
@@ -264,7 +264,7 @@ export default function AdminDashboard() {
                 <div key={issue._id?.toString()} className="border border-gray-200 rounded-lg p-4">
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="font-semibold text-gray-900 text-sm">{issue.title}</h3>
-                    <span className={`status-badge ${getStatusColor(issue.status)} text-xs`}>
+                    <span className={`status-badge ${getStatusColor(issue.status as string)} text-xs`}>
                       {issue.status.replace('_', ' ').toUpperCase()}
                     </span>
                   </div>
@@ -325,7 +325,7 @@ export default function AdminDashboard() {
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {issues.map((issue) => (
-                  <tr key={issue._id?.toString()}>
+                  <tr key={(issue._id || Math.random().toString())}>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-medium text-gray-900">{issue.title}</div>
                       <div className="text-sm text-gray-500 line-clamp-2">{issue.description}</div>
@@ -337,7 +337,7 @@ export default function AdminDashboard() {
                       {issue.createdBy?.name || 'Unknown'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`status-badge ${getStatusColor(issue.status)}`}>
+                      <span className={`status-badge ${getStatusColor(issue.status as string)}`}>
                         {issue.status.replace('_', ' ').toUpperCase()}
                       </span>
                     </td>

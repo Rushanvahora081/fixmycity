@@ -22,15 +22,15 @@
   }
   
   .btn-success {
-    @apply bg-success-600 text-white hover:bg-success-700;
+    @apply bg-success-600 text-white hover:bg-success-500;
   }
   
   .btn-warning {
-    @apply bg-warning-600 text-white hover:bg-warning-700;
+    @apply bg-warning-600 text-white hover:bg-warning-500;
   }
   
   .btn-danger {
-    @apply bg-danger-600 text-white hover:bg-danger-700;
+    @apply bg-danger-600 text-white hover:bg-danger-500;
   }
   
   .card {
@@ -50,14 +50,14 @@
   }
   
   .status-pending {
-    @apply bg-warning-100 text-warning-800;
+    @apply bg-warning-50 text-warning-600;
   }
   
   .status-in-progress {
-    @apply bg-primary-100 text-primary-800;
+    @apply bg-primary-50 text-primary-600;
   }
   
   .status-solved {
-    @apply bg-success-100 text-success-800;
+    @apply bg-success-50 text-success-600;
   }
 }

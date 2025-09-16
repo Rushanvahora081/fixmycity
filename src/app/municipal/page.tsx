@@ -1,11 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Issue } from '@/models/Issue';
+import { IssueDTO } from '@/types/issue';
 
 export default function MunicipalDashboard() {
   const [user, setUser] = useState<any>(null);
-  const [issues, setIssues] = useState<Issue[]>([]);
+  const [issues, setIssues] = useState<IssueDTO[]>([]);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>('all');
@@ -50,7 +50,7 @@ export default function MunicipalDashboard() {
       if (response.ok) {
         // Update the local state
         setIssues(issues.map(issue => 
-          issue._id?.toString() === issueId 
+          (issue._id?.toString?.() || issue._id) === issueId 
             ? { ...issue, status: newStatus as any, updatedAt: new Date() }
             : issue
         ));
@@ -169,7 +169,7 @@ export default function MunicipalDashboard() {
         ) : (
           <div className="space-y-4">
             {filteredIssues.map((issue) => (
-              <div key={issue._id?.toString()} className="border border-gray-200 rounded-lg p-6">
+              <div key={(issue._id || Math.random().toString())} className="border border-gray-200 rounded-lg p-6">
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex-1">
                     <h3 className="font-semibold text-gray-900 text-lg mb-2">{issue.title}</h3>
@@ -183,14 +183,14 @@ export default function MunicipalDashboard() {
                   </div>
                   
                   <div className="flex flex-col items-end space-y-2">
-                    <span className={`status-badge ${getStatusColor(issue.status)}`}>
+                    <span className={`status-badge ${getStatusColor(issue.status as string)}`}>
                       {issue.status.replace('_', ' ').toUpperCase()}
                     </span>
                     
                     {getNextStatus(issue.status) && (
                       <button
-                        onClick={() => updateIssueStatus(issue._id?.toString() || '', getNextStatus(issue.status)!)}
-                        disabled={updating === issue._id?.toString()}
+                        onClick={() => updateIssueStatus((issue._id?.toString?.() || issue._id || ''), getNextStatus(issue.status as string)!)}
+                        disabled={updating === (issue._id?.toString?.() || issue._id)}
                         className={`btn ${
                           issue.status === 'pending' ? 'btn-primary' : 'btn-success'
                         } text-sm`}
